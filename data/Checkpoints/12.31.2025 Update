@@ -1,94 +1,99 @@
-version 1.0, 12/31/2025
 
-# US Immigration Data Project - Progress Checkpoint
+Version 1.01 - Pranav Ongole, DataForge365
+# US Immigration Data Project - Progress Checkpoint v2
 
-> **Purpose:** This document tracks project progress. Save it to your repo at `docs/project_checkpoint.md` so you can resume work in a new chat if needed.
+> **Last Updated:** December 31, 2024  
+> **Purpose:** Complete project state for resuming work in a new chat session.
 
 ---
 
 ## Project Overview
 
-**Goal:** Build a free, public platform showing US immigration data — arrivals, visas, denials by country, port, and visa type.
+**Goal:** Build a free, public platform showing US immigration data — arrivals, visas, denials by country, port, and visa type. Non-profit, transparency-focused.
 
 **Repository:** github.com/DataForge365/US-Immigration-Data
 
 **License:** Creative Commons Attribution 4.0 (CC BY 4.0)
 
+**Tech Stack:**
+- Storage: GitHub (free)
+- Editor: VS Code with Jupyter notebooks
+- Language: Python 3.13.3
+- Data Processing: pandas (to install)
+- Database: SQLite (single file)
+- Visualization: Datasette (later)
+- Hosting: Vercel or Fly.io free tier (later)
+
 ---
 
 ## Completed Steps ✅
 
-### Phase 1: GitHub Setup
-- [x] Created GitHub repository (public)
-- [x] Added folder structure:
-  - `data/raw/` — Original downloaded files
-  - `data/processed/` — Cleaned/standardized CSVs
-  - `data/consolidated/` — Final merged datasets
-  - `scripts/` — Python code for scraping/cleaning
-  - `docs/` — Documentation
-  - `database/` — SQLite database
-- [x] Updated LICENSE to CC BY 4.0
-- [x] Created `docs/data_dictionary.md` with full data model
+### Phase 1: GitHub Repository Setup
+- [x] Created public GitHub repository
+- [x] Set up folder structure:
+  ```
+  US-Immigration-Data/
+  ├── data/
+  │   ├── raw/           # Original downloaded files
+  │   ├── processed/     # Cleaned CSVs
+  │   └── consolidated/  # Final merged datasets
+  ├── database/          # SQLite database
+  ├── docs/              # Documentation
+  ├── scripts/           # Python code
+  ├── .gitignore
+  ├── LICENSE            # CC BY 4.0
+  └── README.md
+  ```
+- [x] Updated LICENSE from MIT to Creative Commons BY 4.0
+- [x] Created `docs/data_dictionary.md` with complete data model schema
 
-### Phase 2: Local Environment
-- [x] VS Code installed with Python support
-- [x] GitHub Copilot available
-
----
-
-## Next Steps To Do 🔲
-
-### Immediate (Phase 2 continued):
-- [ ] Install Python extensions in VS Code (Python, Jupyter)
-- [ ] Clone GitHub repo to local Mac
-- [ ] Set up Python virtual environment
-- [ ] Install required packages (pandas, requests, openpyxl, sqlite3)
-- [ ] Create first Jupyter notebook for data exploration
-
-### Data Collection (Phase 3):
-- [ ] Download first priority dataset: State Dept NIV Detail Tables
-- [ ] Download second priority: DHS Yearbook Tables 25-32
-- [ ] Download third priority: I-94 Historical Data
-- [ ] Save raw files to `data/raw/`
-
-### Data Processing (Phase 4):
-- [ ] Write cleaning script for NIV data
-- [ ] Standardize country codes (ISO 3166-1 alpha-3)
-- [ ] Standardize visa class codes
-- [ ] Export cleaned CSVs to `data/processed/`
-
-### Database (Phase 5):
-- [ ] Create SQLite database: `database/immigration.db`
-- [ ] Load arrivals table
-- [ ] Load visa_issuances table
-- [ ] Load visa_refusals table
-- [ ] Create sources metadata table
-
-### Visualization (Phase 6):
-- [ ] Deploy Datasette for public access
-- [ ] Create basic charts/dashboards
+### Phase 2: Local Development Environment
+- [x] VS Code installed with extensions:
+  - Python (Microsoft)
+  - Jupyter (Microsoft)
+  - GitHub Pull Requests (GitHub)
+- [x] GitHub Desktop installed and connected
+- [x] Repository cloned to local Mac
+- [x] Created first Jupyter notebook: `scripts/01_download_and_explore.ipynb`
+- [x] Selected Python kernel: Python 3.13.3
 
 ---
 
-## Tech Stack
+## Current Status 🔄
 
-| Layer | Tool | Status |
-|-------|------|--------|
-| Storage | GitHub | ✅ Set up |
-| Code Editor | VS Code | ✅ Installed |
-| Language | Python 3.x | 🔲 Verify version |
-| Data Processing | pandas | 🔲 Install |
-| Database | SQLite | 🔲 Create |
-| Visualization | Datasette | 🔲 Later |
-| Hosting | Vercel/Fly.io | 🔲 Later |
+**Currently at:** Ready to write first code cell to download immigration data
+
+**Next immediate action:** Install pandas and download State Dept NIV Detail Tables
 
 ---
 
-## Key Data Sources (Priority Order)
+## Data Model Summary
 
-1. **State Dept NIV Detail Tables** (FY1997-2024)
+**6 Tables defined in data_dictionary.md:**
+
+| Table | Purpose | Primary Source |
+|-------|---------|----------------|
+| `arrivals` | People entering US at ports | CBP, I-94, DHS Yearbook |
+| `visa_issuances` | Visas issued by embassies | State Department |
+| `visa_refusals` | Denied visa applications | State Department |
+| `inadmissibles` | Denied entry at ports | CBP |
+| `overstays` | Stayed past authorization | DHS Entry/Exit Reports |
+| `sources` | Metadata tracking | Internal |
+
+**Key columns standardized:**
+- Dates: YYYY-MM format
+- Countries: ISO 3166-1 alpha-3 codes (IND, CHN, MEX, etc.)
+- Visa classes: Standardized codes (H-1B, F-1, B-1/B-2, etc.)
+
+---
+
+## Priority Data Sources
+
+### Tier 1 (Download First):
+1. **State Dept NIV Detail Tables** ⬅️ STARTING HERE
    - URL: https://travel.state.gov/content/dam/visas/Statistics/Non-Immigrant-Statistics/NIVDetailTables/FYs97-24_NIVDetailTable.xlsx
-   - Format: Excel
+   - Format: Excel (.xlsx)
+   - Coverage: FY1997-2024
    - Contains: All visa issuances by class × nationality
 
 2. **DHS Yearbook Tables 25-32**
@@ -101,50 +106,83 @@ version 1.0, 12/31/2025
    - Format: Excel
    - Contains: Monthly arrivals by country, visa type, port
 
-4. **Full source inventory:** See the CSV artifact created earlier in chat or `Immigration Data Sources Master Inventory v2.csv`
+### Tier 2 (Download Next):
+4. CBP Public Data Portal CSVs
+5. USCIS H-1B Employer Data Hub
+6. Entry/Exit Overstay Reports (PDFs)
 
 ---
 
-## Data Model Summary
+## Full Source Inventory
 
-**5 Main Tables:**
-1. `arrivals` — People entering US at ports of entry
-2. `visa_issuances` — Visas issued by embassies
-3. `visa_refusals` — Denied visa applications
-4. `inadmissibles` — People denied at ports of entry
-5. `overstays` — People who stayed past authorization
-
-**Full schema:** See `docs/data_dictionary.md` in repo
+A comprehensive CSV with 79 data sources was created earlier, covering:
+- PORT_OF_ENTRY: CBP, DHS OHSS, I-94 Program, Land Border, Overstay Reports
+- VISA_DATA: State Dept Monthly/Annual, Refusals, USCIS, Wait Times
+- OVERSIGHT: GAO Reports, CRS Reports
+- RESEARCH: Think tanks (MPI, Pew, TRAC), Academic sources
+- DATA_GAPS: What doesn't exist publicly
 
 ---
 
-## Commands Reference (for later)
+## Environment Details
 
-```bash
-# Clone repo to your Mac (run in Terminal)
-cd ~/Documents
-git clone https://github.com/DataForge365/US-Immigration-Data.git
-cd US-Immigration-Data
+**Computer:** MacBook Pro M1
 
-# Create Python virtual environment
-python3 -m venv venv
-source venv/bin/activate
+**Python Location:** /usr/local/bin/python3 (Python 3.13.3)
 
-# Install packages
-pip install pandas openpyxl requests jupyter
+**Anaconda:** Also installed at /opt/anaconda3 (Python 3.9.7) — not using this
 
-# Start Jupyter in VS Code
-# Just open a .ipynb file and VS Code handles it
+**Required Packages (to install):**
+```
+pandas
+openpyxl
+requests
+jupyter
+sqlite3 (built-in)
 ```
 
 ---
 
-## If Starting a New Chat
+## Next Steps To Do 🔲
 
-Copy this message to Claude:
+### Immediate:
+- [ ] Install pandas and openpyxl in first notebook cell
+- [ ] Download State Dept NIV Detail Tables
+- [ ] Explore the data structure
+- [ ] Save raw file to `data/raw/`
 
-> "I'm working on a US immigration data project. Here's my progress checkpoint: [paste contents of this file]. I have VS Code set up with Python. My next step is [X]. Please continue helping me from there."
+### This Week:
+- [ ] Clean and standardize the NIV data
+- [ ] Export to `data/processed/`
+- [ ] Download DHS Yearbook tables
+- [ ] Create SQLite database
+
+### Later:
+- [ ] Write GitHub Actions for automated updates
+- [ ] Deploy Datasette for public access
+- [ ] Build visualization dashboard
 
 ---
 
-*Last updated: December 31, 2024*
+## Key Decisions Made
+
+1. **License:** CC BY 4.0 (not MIT) — better for data projects
+2. **Database:** SQLite (single file, no server) — appropriate for non-profit
+3. **Hosting:** GitHub + Vercel/Fly.io free tier — $0/year
+4. **Editor:** VS Code + Jupyter notebooks (not Terminal)
+5. **Git tool:** GitHub Desktop (not command-line Git)
+
+---
+
+## Files Created
+
+| File | Location | Purpose |
+|------|----------|---------|
+| `data_dictionary.md` | `docs/` | Complete data model with all table schemas |
+| `project_checkpoint.md` | `docs/` | This progress tracker |
+| `01_download_and_explore.ipynb` | `scripts/` | First Jupyter notebook |
+
+---
+
+
+*Checkpoint v2 — December 31, 2024*
